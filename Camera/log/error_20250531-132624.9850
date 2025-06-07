@@ -1,0 +1,4 @@
+Log file created at: 2025/05/31 13:26:24
+Running on machine: xyq-Legion-Y7000P-IRH8
+Log line format: [IWEF]mmdd hh:mm:ss.uuuuuu threadid file:line] msg
+E0531 13:26:24.615126  9894 MVCAMAPI.cpp:350] CameraInit Failed, err:-18,Version:2.1.0.37,FriendlyName:MV-SUA630C#0,SN:043172220159

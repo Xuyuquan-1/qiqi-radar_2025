@@ -1,0 +1,4 @@
+Log file created at: 2025/05/25 15:59:48
+Running on machine: xyq-Legion-Y7000P-IRH8
+Log line format: [IWEF]mmdd hh:mm:ss.uuuuuu threadid file:line] msg
+W0525 15:59:48.330502 418530 MVCameraBase.cpp:99] Device:(name:MV-SUA630C#0 sn:043172220159)Lost

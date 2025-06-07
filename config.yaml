@@ -1,0 +1,74 @@
+global:
+  state: 'R'  # 队伍颜色 R/B
+  camera_mode: 'mv'  # 'test':测试模式,'hik':海康相机,'video':USB相机（videocapture）'mv'迈德相机 'capture' 视频
+  use_serial: True  # 串口启用开关  保证了无串口时能正常调试，虽然没什么影响（有try）
+  save_img: False  # 是否保存图像
+  map_size: [2800, 1500]  # 战场地图尺寸
+
+serial: # 串口
+  port: '/dev/ttyACM0'
+  baudrate: 115200
+  timeout: 1
+
+filter:
+  type: "sliding_window"  # 可选值：kalman/sliding_window
+  sliding_window:
+    window_size: 5  # 滑动窗口大小
+    max_inactive_time: 2.0 # 滤波器最大不活跃时间(秒)
+    threshold: 100000.0
+  kalman:
+    max_inactive_time: 2.0
+
+paths:
+  calibration:
+    red: 'arrays_test_red.npy' # 加载标定好的仿射变换矩阵
+    blue: 'arrays_test_blue.npy'
+  map_images:
+    red: 'images-2025/map_red.jpg'  # 加载红方视角地图
+    blue: 'images-2025/map_blue.jpg'
+    mask: 'images-2025/map_mask.jpg' # 加载落点判断掩码
+    backup: 'images-2025/map.jpg'
+  models:
+    car: 'models/car.pt'
+    armor: 'models/armor.pt'
+
+camera_params:
+  exposure_time: 16000.0 # 曝光时间
+  gain: 17.9 # 增益值
+kalman:
+  process_noise: 1e-5
+  measurement_noise: 1e-1
+
+blind_zone:
+  base_time: 3.0  # 基础预测时间
+  offset_time: 1.7  # 时间偏移量(根据上一帧的信道占用数动态调整单点预测时间)
+  points:
+    # R1: [[1035, 1047], [1008, 547]] 
+    # R1: [[1041, 393], [955, 1075]] # 两个常用吊射点位
+    R1: [[1029, 434], [457, 297]] # 辽科
+    # R1: [[1051, 94], [436, 94]] # 两侧高地后面
+    R2: [[933, 750]]
+    R2: [[908, 756], [1340, 691]] # 金矿区和银矿区
+    R7: [[661, 745], [441, 747]]
+    B1: [[1776, 472], [1798, 1172]] # 两个常用吊射点位
+    B2: [[1895, 759]] # 银矿
+    B3: [[622, 124], [746, 124]] #防rush
+    B4: [[622, 124], [746, 124]] #防rush
+    B7: [[2142, 747], [2337, 750]]
+  hero_blind_mode: 'base' # 'tower'/前哨站   'base'/基地  '1'/英雄 后续类推...
+  enemy_state: 'B'
+  maxtime: 12
+  each_guess_time: 6
+ui:
+  info_panel_size: [420, 500]  # 信息面板尺寸
+  map_display_size: [900, 480]  # 地图显示尺寸
+  img_display_size: [1300, 900] # 画面显示尺寸
+  
+  
+mv_camera:
+  exposure_time: 8000 # 8000 16000
+  gain: 256 # 200 # 80
+  while_balance_R: 160 #130
+  while_balance_B: 125 #125
+  while_balance_G: 100
+
